@@ -7,11 +7,11 @@ const _ = require('underscore')
 const winston = require('winston')
 
 module.exports = function (hook) {
-  if (_.has(hook.data, 'participants')) {
+  if (_.has(hook.data, 'currentParticipants')) {
     hook.app.service('participantEvents')
       .create({
         meeting: hook.result._id,
-        participants: hook.result.participants,
+        participants: hook.result.currentParticipants,
         timestamp: new Date()
       })
       .then((participantEvent) => {
@@ -23,7 +23,7 @@ module.exports = function (hook) {
         return hook
       })
   } else {
-    winston.log('info', 'no participants in request, not creating event...')
+    winston.log('info', 'no currentParticipants in request, not creating event...')
     return hook
   }
 }

@@ -26,12 +26,12 @@ module.exports = function (hook) {
   if (hook.method === 'create') {
     return createMeetingStartEvent(hook)
   } else {
-    if (!_.has(hook.data, 'participants')) {
+    if (!_.has(hook.data, 'currentParticipants')) {
       return hook
     } else {
       return hook.app.service('meetings').get(hook.id)
                  .then((meeting) => {
-                   if (shouldMakeMeetingActive(hook.data.participants, meeting)) {
+                   if (shouldMakeMeetingActive(hook.data.currentParticipants, meeting)) {
                      hook.data.active = true
                      hook.data.endTime = null
                      return createMeetingStartEvent(hook)

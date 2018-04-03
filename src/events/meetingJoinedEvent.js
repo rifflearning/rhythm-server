@@ -12,11 +12,11 @@ function addParticipantToMeeting (app, participant, meeting) {
       // now patch the meeting to include the participant
       winston.log('info', 'patching meeting: ', meeting)
       winston.log('info', 'adding participant to meeting: ', participant._id)
-      var parts = meeting.participants || []
+      var parts = meeting.currentParticipants || []
       return app.service('meetings')
-        .patch(meeting, { participants: _.uniq(parts.concat([ participant._id ])) })
+        .patch(meeting, { currentParticipants: _.uniq(parts.concat([ participant._id ])) })
         .then((meeting) => {
-          winston.log('info', 'updated meeting with participants: ', meeting)
+          winston.log('info', 'updated meeting with currentParticipants: ', meeting)
           return meeting
         })
     })

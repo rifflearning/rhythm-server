@@ -71,10 +71,10 @@ var maybeEndMeeting = function (context, passedApp) {
   var app = passedApp === undefined ? scope.app : passedApp
   if (context.meetingShouldEnd) {
     winston.log('info', 'meetingShouldEnd', JSON.stringify(context.meeting))
-    return app.service('meetings').patch(context.meeting, { participants: [], active: false })
+    return app.service('meetings').patch(context.meeting, { currentParticipants: [], active: false })
               .then((patchedMeeting) => {
                 winston.log('info', 'patched meeting w/ id: ', patchedMeeting._id)
-                return patchedMeeting.participants.length === 0 &&
+                return patchedMeeting.currentParticipants.length === 0 &&
                        patchedMeeting.active === false
               })
               .catch((err) => {

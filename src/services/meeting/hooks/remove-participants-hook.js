@@ -8,18 +8,18 @@ const _ = require('underscore')
 const winston = require('winston')
 
 module.exports = function (hook) {
-  if (hook.data.remove_participants) {
+  if (hook.data.remove_currentParticipants) {
     return hook.app.service('meetings')
       .get(hook.id)
       .then((meeting) => {
-        var oldParticipants = meeting.participants
-        hook.data.participants = _.difference(oldParticipants,
-                                              hook.data.remove_participants)
-        delete hook.data.remove_participants
+        var oldParticipants = meeting.currentParticipants
+        hook.data.currentParticipants = _.difference(oldParticipants,
+                                                     hook.data.remove_currentParticipants)
+        delete hook.data.remove_currentParticipants
         return hook
       })
       .catch((err) => {
-        winston.log('error', 'couldnt remove given participants', err)
+        winston.log('error', 'couldnt remove given currentParticipants', err)
         return hook
       })
   } else {

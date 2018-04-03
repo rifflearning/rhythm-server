@@ -19,7 +19,7 @@ var nodemailer = require('nodemailer')
 
 function shouldMakeMeetingInactive (newParticipants, meetingObject) {
   return (newParticipants.length === 0 &&
-          meetingObject.participants.length > 0 &&
+          meetingObject.currentParticipants.length > 0 &&
           meetingObject.active === true)
 }
 
@@ -32,6 +32,9 @@ function reportMeeting (hook) {
 
 function getReportData (hook, callback) {
   winston.log('info', 'Getting report data...')
+  // TODO: Once we populate attendingParticipants in the meeting, we don't have to
+  // search all the participant events to find them. -mjl 2018-04-03
+  //
   // find participant events (-> historical participants)
   var meetingId = hook.id
   if (hook.id === Object(hook.id)) {
@@ -279,12 +282,12 @@ function createMeetingEndEvent (hook) {
 }
 
 module.exports = function (hook) {
-  if (!_.has(hook.data, 'participants')) {
+  if (!_.has(hook.data, 'currentParticipants')) {
     return hook
   } else {
     return hook.app.service('meetings').get(hook.id)
                .then((meeting) => {
-                 if (shouldMakeMeetingInactive(hook.data.participants, meeting)) {
+                 if (shouldMakeMeetingInactive(hook.data.currentParticipants, meeting)) {
                    hook.data.active = false
                    hook.data.endTime = new Date()
                    if (process.env.SEND_REPORT) {
