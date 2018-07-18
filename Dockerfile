@@ -40,7 +40,7 @@ ENV SEND_REPORT=$SEND_REPORT
 ENV END_MEETING_AFTER_MINUTES=$END_MEETING_AFTER_MINUTES
 
 # Modified bashrc which defines some aliases and an interactive prompt (for both root & node users)
-COPY bashrc /root/.bashrc
+COPY docker/bashrc /root/.bashrc
 
 # set the root password to password (I don't care that it's simple it's only for development
 # this shouldn't exist in a production container
@@ -60,7 +60,7 @@ COPY . .
 # node images have a node user w/ UID 1000 (works well for me for now, but more thought may be needed later) -mjl
 USER node
 WORKDIR /app
-COPY bashrc /home/node/.bashrc
+COPY docker/bashrc /home/node/.bashrc
 
 EXPOSE 3000
 
