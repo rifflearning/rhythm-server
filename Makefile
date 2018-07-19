@@ -1,5 +1,5 @@
 #
-# Makefile to build and test the rhythm-server
+# Makefile to build and test the riff-server
 #   duplicates (and should be kept in sync with) some of the scripts in package.json
 #
 
@@ -21,25 +21,34 @@ LINT_FORMAT = stylish
 
 help :
 	@echo ""                                                                          ; \
-	echo "Useful targets in this rhythm-server Makefile:"                             ; \
+	echo "Useful targets in this riff-server Makefile:"                               ; \
 	echo "- all       : run lint, build, test"                                        ; \
-	echo "- build     :"                                                              ; \
+	echo "- build     : currently does nothing"                                       ; \
+	echo "- clean     : remove all files created by build"                            ; \
 	echo "- lint      : run lint over the sources & tests; display results to stdout" ; \
 	echo "- lint-log  : run lint concise diffable output to $(LINT_LOG)"              ; \
 	echo "- test      : run the mocha (unit) tests"                                   ; \
 	echo "- load-test : run the mocha (load) tests"                                   ; \
 	echo "- wtftest   : run the mocha (unit) tests w/ wtfnode to help debug the test run hanging at the end" ; \
-	echo "- start-dev : start a dev container for the rhythm-server"                  ; \
 	echo "- vim-lint  : run lint in format consumable by vim quickfix"                ; \
+	echo "- init      : run install, build; intended for initializing a fresh repo clone" ; \
+	echo "- install   : run npm install"                                              ; \
 	echo ""
 
 all : lint build test
 
+init : install build
+
+install:
+	npm install
+
 build :
-	@echo build would run the compiler: $(COMPILER)
+	@echo "build converts source files to runnable files (eg compiles, links, minimizes)"
+	@echo "riff-server source files are run as is at this time, so no processing is needed."
 
 doc :
-	@echo doc would run the compiler: $(COMPILER)
+	@echo "doc creates usable documentation files (eg extracts/compiles doc in source code)"
+	@echo "riff-server does not have any extractable or buildable documentation at this time."
 
 lint-log: LINT_OPTIONS = --output-file $(LINT_LOG)
 lint-log: LINT_FORMAT = unix
@@ -62,11 +71,6 @@ clean : clean-build
 
 clean-build :
 	-rm -f dist/*
-
-start-dev :
-	-docker-compose run rhythm-server bash
-	-docker-compose rm --force
-	-docker-compose stop
 
 ./node_modules/.bin/wtfnode :
 	npm install wtfnode --no-save
