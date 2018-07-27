@@ -1,48 +1,31 @@
 # Args for FROM directives
-ARG NODE_VER=10
+ARG NODE_VER=8
 
 #
 # ---- Base Node image ----
 FROM node:${NODE_VER} AS base
 # The node:8 npm (v 5.6) has some issues, update it to latest
 RUN npm install -g npm
+# Modified bashrc which defines some aliases and an interactive prompt
+COPY bashrc /root/.bashrc
+COPY --chown=node:node bashrc /home/node/.bashrc
+# set the root password to password (I don't care that it's simple it's only for development)
+# this shouldn't exist in a production container
+RUN echo "root:password" | chpasswd
 # create and set working directory owned by non-root user; set that user
 WORKDIR /app
-RUN chown node:node /app
+RUN chown node /app
 USER node
-# copy the app project file
-COPY --chown=node:node package.json .
 
 #
-# ---- Dependencies ----
-FROM base AS dependencies
-# install node packages
-RUN npm install --only=production
-# copy production node_modules aside
-RUN cp -R node_modules prod_node_modules
-# install ALL node_modules, including 'devDependencies'
-RUN npm install
-
+# ---- Development ----
+FROM base AS development
+LABEL Description="dev: this image runs the riff-server which collects utterance info made by participants in meetings"
+# This is the development image, set NODE_ENV to reflect that
+ENV NODE_ENV=development
+# npm install (and build if needed) must exist in the volume bound at /app
+# expected to be the local repo working directory.
 #
-# ---- Test ----
-# run linters, setup and tests
-#  see https://codefresh.io/docker-tutorial/node_docker_multistage/
-#  when ready to add this stage (if test stage fails, image build fails)
-#FROM dependencies AS test
-#COPY . .
-#RUN  npm run lint && npm run setup && npm run test
-
-#
-# ---- Release ----
-FROM base AS release
-LABEL Description="This image runs the riff-server which collects utterance info made by participants in meetings"
-# This is the production image, set NODE_ENV to reflect that
-ENV NODE_ENV=production
-# copy production node_modules
-COPY --from=dependencies --chown=node:node /app/prod_node_modules ./node_modules
-# copy app sources
-COPY --chown=node:node ./config ./config/
-COPY --chown=node:node ./src ./src/
 # allow the port used to be specified, default to 3000
 ARG PORT=3000
 ENV PORT=$PORT
@@ -84,5 +67,8 @@ ENV AUTH_ON=$AUTH_ON \
     REPORT_EMAIL_TEXT=$REPORT_EMAIL_TEXT \
     SEND_REPORT=$SEND_REPORT \
     END_MEETING_AFTER_MINUTES=$END_MEETING_AFTER_MINUTES
-# define command to start the riff-server
+# when a container is started w/ this image the riff-server repository working
+# directory must be bound at /app and all dependent packages installed for this
+# command to correctly start the riff-server
+VOLUME ["/app"]
 CMD ["npm", "start"]
