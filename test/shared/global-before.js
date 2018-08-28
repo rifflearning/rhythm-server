@@ -30,7 +30,7 @@ var mongoUrl = process.env.MONGODB_URI
 function dropDatabase () {
   winston.log('info', 'dropping db..')
   var mongoClient = null
-  return MongoClient.connect(mongoUrl)
+  return MongoClient.connect(mongoUrl, { useNewUrlParser: true })
                     .then((client) => {
                       mongoClient = client
                       return client.db().dropDatabase()
@@ -43,7 +43,7 @@ function createUser (mongoClient) {
   return new Promise(function (resolve, reject) {
     mongoClient.close()
       .then(function () {
-        mongoose.connect(mongoUrl)
+        mongoose.connect(mongoUrl, { useNewUrlParser: true })
         mongoose.Promise = global.Promise
       })
     var serverNoAuth = feathers().configure(user)

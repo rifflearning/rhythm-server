@@ -18,13 +18,15 @@ module.exports = function () {
 
   /* eslint-disable camelcase */
   let options = {
-    server: { sslCA: process.env.MONGO_CERT,
-              auto_reconnect: true,
-              poolSize: 5 }
+    sslCA: process.env.MONGO_CERT,
+    auto_reconnect: true,
+    poolSize: 5,
+    useNewUrlParser: true,
   }
   /* eslint-enable camelcase */
 
   mongoose.connect(process.env.MONGODB_URI, options)
+  mongoose.set('useCreateIndex', true)
   mongoose.Promise = global.Promise
 
   app.configure(authentication)
