@@ -67,10 +67,10 @@ function createMeetingAndUtterances (testName) {
   return global.app.service('meetings')
     .create(testMeeting)
     .then(function (meeting) {
-      _.each(testParticipants, function (participant, i, list) {
+      _.each(testParticipants, function (participant) {
         global.app.service('participants').create(participant)
       })
-      _.each(testUtterances, function (utterance, i, list) {
+      _.each(testUtterances, function (utterance) {
         global.app.service('utterances').create(utterance)
       })
       assert(meeting.active === true)
