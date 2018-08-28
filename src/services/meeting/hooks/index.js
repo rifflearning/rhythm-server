@@ -27,9 +27,9 @@ exports.before = {
   update: [ updateTime ],
   patch: [ updateTime,
            activateMeetingHook,
-           deactivateMeetingHook,
            removeParticipantsHook,
-           addParticipantHook ],
+           addParticipantHook,
+           deactivateMeetingHook],
   get: []
 }
 

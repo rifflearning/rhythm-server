@@ -10,7 +10,7 @@ exports.before = {
   all: [ auth.hooks.authenticate('jwt') ],
   find: [],
   get: [],
-  create: [ participantConsentedHook, roomHook, mergeHook, repeatHook ],
+  create: [ participantConsentedHook, roomHook, mergeHook ],
   update: [],
   patch: [],
   remove: []
