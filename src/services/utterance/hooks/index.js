@@ -1,6 +1,6 @@
 'use strict'
 
-const repeatHook = require('./repeatHook').hook
+// const repeatHook = require('./repeatHook').hook
 const mergeHook = require('./mergeHook').hook
 const roomHook = require('../../../hooks/roomHook').hook
 const participantConsentedHook = require('./participant-consented-hook')

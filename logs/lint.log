@@ -49,8 +49,8 @@
 /app/src/services/utterance/hooks/mergeHook.js:28:15: Each then() should return a value or throw [Error/promise/always-return]
 /app/src/services/utterance/hooks/participant-consented-hook.js:10:25: Expected to return a value at the end of arrow function. [Error/consistent-return]
 /app/src/services/utterance/hooks/participant-consented-hook.js:11:7: Each then() should return a value or throw [Error/promise/always-return]
-/app/src/services/utterance/hooks/repeatHook.js:9:3: Expected catch() or return [Error/promise/catch-or-return]
-/app/src/services/utterance/hooks/repeatHook.js:28:39: Gratuitous parentheses around expression. [Warning/no-extra-parens]
+/app/src/services/utterance/hooks/repeatHook.js:10:3: Expected catch() or return [Error/promise/catch-or-return]
+/app/src/services/utterance/hooks/repeatHook.js:29:39: Gratuitous parentheses around expression. [Warning/no-extra-parens]
 /app/src/services/utterance/hooks/roomHook.js:3:16: Expected to return a value at the end of function. [Error/consistent-return]
 /app/src/services/utterance/hooks/roomHook.js:9:3: Expected catch() or return [Error/promise/catch-or-return]
 /app/test/events/index.test.js:27:38: 'room' is defined but never used. [Warning/no-unused-vars]
@@ -272,7 +272,6 @@
 /app/test/services/utterance/index.test.js:125:13: Avoid calling back inside of a promise. [Warning/promise/no-callback-in-promise]
 /app/test/services/utterance/index.test.js:128:13: Avoid calling back inside of a promise. [Warning/promise/no-callback-in-promise]
 /app/test/services/utterance/index.test.js:132:9: Avoid calling back inside of a promise. [Warning/promise/no-callback-in-promise]
-/app/test/shared/global-before.js:43:10: Avoid creating new promises. [Warning/promise/avoid-new]
 /app/test/shared/global-before.js:44:5: Expected catch() or return [Error/promise/catch-or-return]
 /app/test/shared/global-before.js:45:13: Each then() should return a value or throw [Error/promise/always-return]
 /app/test/shared/global-before.js:56:13: Each then() should return a value or throw [Error/promise/always-return]
@@ -285,8 +284,8 @@
 /app/test/shared/global-before.js:104:31: Avoid calling back inside of a promise. [Warning/promise/no-callback-in-promise]
 /app/test/shared/global-before.js:105:35: Avoid calling back inside of a promise. [Warning/promise/no-callback-in-promise]
 
-286 problems
+285 problems
 ---- Added manually (from the console report)
 
-✖ 286 problems (109 errors, 177 warnings)
+✖ 285 problems (109 errors, 176 warnings)
   0 errors, 10 warnings potentially fixable with the `--fix` option.

@@ -29,7 +29,7 @@ exports.before = {
            activateMeetingHook,
            removeParticipantsHook,
            addParticipantHook,
-           deactivateMeetingHook],
+           deactivateMeetingHook ],
   get: []
 }
 

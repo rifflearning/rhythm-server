@@ -8,13 +8,12 @@ const _ = require('underscore')
 const winston = require('winston')
 
 module.exports = function (hook) {
-  winston.log("info", ">>>> remove participants hook", hook.id, "|", hook.remove_participants, "|", hook.data.id, "|", hook.data.remove_participants);
   if (hook.data.remove_participants) {
-    winston.log("info", ">>>> remove participants hook", hook.id, hook.data.id, hook.data.remove_participants);
     return hook.app.service('meetings')
       .get(hook.id)
       .then((meeting) => {
-        winston.log("info", "removing participants", hook.data.remove_participants, "from meeting w ", meeting.participants);
+        winston.log('info', 'removing participants', hook.data.remove_participants,
+                    'from meeting w ', meeting.participants)
         var oldParticipants = meeting.participants
         hook.data.participants = _.difference(oldParticipants,
                                               hook.data.remove_participants)

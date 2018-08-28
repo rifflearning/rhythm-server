@@ -13,7 +13,7 @@ module.exports = function () {
       'default': 50,
       max: 100
     }
-  };
+  }
 
   // Initialize our service with any options it requires
   app.use('/participantEvents', service(options))
