@@ -287,9 +287,10 @@ module.exports = function (hook) {
                  if (shouldMakeMeetingInactive(hook.data.participants, meeting)) {
                    hook.data.active = false
                    hook.data.endTime = new Date()
-                   if (process.env.SEND_REPORT) {
+                   if (process.env.SEND_REPORT && process.env.SEND_REPORT !== 'false') {
                      reportMeeting(hook)
                    }
+                   winston.info('meeting ended:', meeting._id)
                    return createMeetingEndEvent(hook)
                  } else {
                    return hook
