@@ -53,7 +53,7 @@ function createMeetingAndUtterances (testName, ended, hasUtterances, done) {
   global.app.service('meetings')
     .create(testMeeting)
     .then(function (meeting) {
-      _.each(testParticipants, function (participant, i, list) {
+      _.each(testParticipants, function (participant) {
         global.app.service('participants').create(participant).then(() => {})
       })
       return testParticipants

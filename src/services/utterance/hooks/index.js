@@ -1,6 +1,6 @@
 'use strict'
 
-const repeatHook = require('./repeatHook').hook
+// const repeatHook = require('./repeatHook').hook
 const mergeHook = require('./mergeHook').hook
 const roomHook = require('../../../hooks/roomHook').hook
 const participantConsentedHook = require('./participant-consented-hook')
@@ -10,7 +10,7 @@ exports.before = {
   all: [ auth.hooks.authenticate('jwt') ],
   find: [],
   get: [],
-  create: [ participantConsentedHook, roomHook, mergeHook, repeatHook ],
+  create: [ participantConsentedHook, roomHook, mergeHook ],
   update: [],
   patch: [],
   remove: []

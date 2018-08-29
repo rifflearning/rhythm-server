@@ -12,6 +12,8 @@ module.exports = function (hook) {
     return hook.app.service('meetings')
       .get(hook.id)
       .then((meeting) => {
+        winston.log('info', 'removing participants', hook.data.remove_participants,
+                    'from meeting w ', meeting.participants)
         var oldParticipants = meeting.participants
         hook.data.participants = _.difference(oldParticipants,
                                               hook.data.remove_participants)

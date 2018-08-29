@@ -6,6 +6,7 @@ function dateDiff (d1, d2) {
 }
 
 exports.hook = function (hook) {
+  winston.log('info', 'utterance data:', hook.data)
   hook.app.service('utterances')
     .find({
       query: {

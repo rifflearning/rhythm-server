@@ -24,7 +24,7 @@ var getActiveMeetings = function () {
       return meetings
     })
     .catch((err) => {
-      winston.log('error', 'Couldnt find any active meetings:', err)
+      winston.error('Couldnt find any active meetings:', err)
       return []
     })
 }
@@ -32,7 +32,7 @@ var getActiveMeetings = function () {
 // returns an object that indicates whether the given meeting should be ended.
 var isMeetingEnded = function (meeting, passedApp) {
   // TODO make this return true/false instead of an object
-  winston.log('info', 'isMeetingEnded', meeting)
+  winston.info('isMeetingEnded', meeting)
   var app = passedApp === undefined ? scope.app : passedApp
   return app.service('utterances')
     .find({
@@ -53,8 +53,8 @@ var isMeetingEnded = function (meeting, passedApp) {
       }
       return waitFor.then((elapsedTime) => {
         var meetingShouldEnd = elapsedTime > MAX_TIME_SINCE_LAST_UTTERANCE
-        winston.log('info', 'should end?:', elapsedTime, MAX_TIME_SINCE_LAST_UTTERANCE)
-        winston.log('info', 'should end?:', elapsedTime > MAX_TIME_SINCE_LAST_UTTERANCE)
+        winston.info('should end?:', elapsedTime, MAX_TIME_SINCE_LAST_UTTERANCE)
+        winston.info('should end?:', elapsedTime > MAX_TIME_SINCE_LAST_UTTERANCE)
         return { meetingShouldEnd: meetingShouldEnd,
                  meeting: meeting }
       })
@@ -70,15 +70,15 @@ var isMeetingEnded = function (meeting, passedApp) {
 var maybeEndMeeting = function (context, passedApp) {
   var app = passedApp === undefined ? scope.app : passedApp
   if (context.meetingShouldEnd) {
-    winston.log('info', 'meetingShouldEnd', JSON.stringify(context.meeting))
+    winston.info('meetingShouldEnd', JSON.stringify(context.meeting))
     return app.service('meetings').patch(context.meeting, { participants: [], active: false })
               .then((patchedMeeting) => {
-                winston.log('info', 'patched meeting w/ id: ', patchedMeeting._id)
+                winston.info('patched meeting w/ id: ', patchedMeeting._id)
                 return patchedMeeting.participants.length === 0 &&
                        patchedMeeting.active === false
               })
               .catch((err) => {
-                winston.log('info', 'Couldnt patch meeting!', err)
+                winston.warn('Couldnt patch meeting!', err)
                 return false
               })
   } else {
@@ -102,14 +102,14 @@ var endInactiveMeetings = function (meetings, passedApp) {
 
 var monitorMeetings = function () {
   // not sure that this promise chain works the way I'd like it to
-  winston.log('info', '[end-meeting-job] checking all meetings...')
+  winston.debug('[end-meeting-job] checking all meetings...')
   getActiveMeetings()
     .then(endInactiveMeetings)
     .then((endedMeetings) => {
-      console.log('info', '(maybe) ended meetings:', endedMeetings)
+      winston.debug('(maybe) ended meetings:', endedMeetings)
     })
     .catch((err) => {
-      console.log('info', 'oops:', err)
+      winston.error('oops:', err)
     })
 }
 
@@ -124,6 +124,7 @@ var startMonitoringMeetings = function (app) {
 }
 
 var stopMonitoringMeetings = function () {
+  winston.info('[end-meeting-job] Stopping monitoring of meetings')
   clearInterval(pid)
 }
 
