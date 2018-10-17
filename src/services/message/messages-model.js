@@ -13,7 +13,7 @@ const messageSchema = new Schema({
   meeting: { type: String, ref: 'Meeting' },
   time: Date,
   msg: String
-});
+})
 
 const messageModel = mongoose.model('message', messageSchema)
 

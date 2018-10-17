@@ -1,10 +1,10 @@
-
-module.exports = function (options={}) {
-  return async context => {
-    const { data } = context;
+module.exports = function (options = {}) {
+  options
+  return async (context) => {
+    const { data } = context
 
     if (!data.msg) {
-      throw new Error('A message must have a msg');
+      throw new Error('A message must have a msg')
     }
 
     context.data = {
@@ -12,9 +12,9 @@ module.exports = function (options={}) {
       participant: context.data.participant,
       meeting: context.data.meeting,
       time: new Date().getTime()
-    };
+    }
 
-    return context;
+    return context
 
-  };
-};
+  }
+}
