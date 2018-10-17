@@ -7,8 +7,6 @@
 /app/src/events/meetingJoinedEvent.js:100:20: 'meeting' is already declared in the upper scope. [Error/no-shadow]
 /app/src/index.js:8:3: Unexpected console statement. [Warning/no-console]
 /app/src/jobs/end-meeting-job.js:108:11: Each then() should return a value or throw [Error/promise/always-return]
-/app/src/jobs/end-meeting-job.js:109:7: Unexpected console statement. [Warning/no-console]
-/app/src/jobs/end-meeting-job.js:112:7: Unexpected console statement. [Warning/no-console]
 /app/src/jobs/end-meeting-job.js:116:31: Expected to return a value at the end of function. [Error/consistent-return]
 /app/src/jobs/turn-job/turn-analytics.js:17:46: 'turns' is already declared in the upper scope. [Error/no-shadow]
 /app/src/jobs/turn-job/turn-analytics.js:50:11: Each then() should return a value or throw [Error/promise/always-return]
@@ -281,8 +279,8 @@
 /app/test/shared/global-before.js:104:31: Avoid calling back inside of a promise. [Warning/promise/no-callback-in-promise]
 /app/test/shared/global-before.js:105:35: Avoid calling back inside of a promise. [Warning/promise/no-callback-in-promise]
 
-282 problems
+280 problems
 ---- Added manually (from the console report)
 
-✖ 282 problems (109 errors, 173 warnings)
+✖ 280 problems (109 errors, 171 warnings)
   0 errors and 10 warnings potentially fixable with the `--fix` option.

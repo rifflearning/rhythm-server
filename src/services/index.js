@@ -11,7 +11,9 @@ const authentication = require('./authentication')
 const user = require('./user')
 const meeting = require('./meeting')
 const face = require('./face')
+const message = require('./message')
 const mongoose = require('mongoose')
+
 
 module.exports = function () {
   const app = this          // eslint-disable-line consistent-this
@@ -39,4 +41,5 @@ module.exports = function () {
   app.configure(turn)
   app.configure(utteranceDistribution)
   app.configure(face)
+  app.configure(message)
 }
